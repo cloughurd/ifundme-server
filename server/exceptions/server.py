@@ -17,7 +17,7 @@ class ServerException(Exception):
 
 class InvalidRequestException(ServerException):
     def __init__(self, cause='unknown', inner_error=None):
-        super.__init__(inner_error)
+        super().__init__(inner_error)
         self.cause = cause
 
     def get_message(self):

@@ -3,7 +3,7 @@ from server.exceptions.server import ServerException
 
 class DuplicateResourceIdException(ServerException):
     def __init__(self, resource_id='unknown', resource_type='uknown', inner_error=None):
-        super.__init__(inner_error)
+        super().__init__(inner_error)
         self.resource_id = resource_id
         self.resource_type = resource_type
 
@@ -16,7 +16,7 @@ class DuplicateResourceIdException(ServerException):
 
 class StorageAccessException(ServerException):
     def __init__(self, storage_type='unknown', inner_error=None):
-        super.__init__(inner_error)
+        super().__init__(inner_error)
         self.storage_type = storage_type
 
     def get_message(self):
@@ -25,7 +25,7 @@ class StorageAccessException(ServerException):
 
 class ResourceNotFoundException(ServerException):
     def __init__(self, resource_id='unknown', resource_type='unknown', inner_error=None):
-        super.__init__(inner_error)
+        super().__init__(inner_error)
         self.resource_id = resource_id
         self.resource_type = resource_type
 

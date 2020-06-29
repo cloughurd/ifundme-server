@@ -2,11 +2,11 @@ from server.models.user import User
 
 
 class UserStorage:
-    def create(self, username: str, password_hash: str) -> User:
+    def create_user(self, username: str, password_hash: str) -> User:
         raise NotImplementedError
 
-    def update(self, username: str) -> User:
+    def update_user(self, username: str) -> User:
         raise NotImplementedError
 
-    def list(self) -> list:
+    def list_users(self) -> list:
         raise NotImplementedError

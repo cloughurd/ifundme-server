@@ -27,6 +27,7 @@ def handle_error(e: Exception):
     elif isinstance(e, NotFound):
         return e
     else:
+        logger.error(e)
         unknown_error = ServerException(e)
         return build_response(unknown_error.to_response(), unknown_error.get_code())
 

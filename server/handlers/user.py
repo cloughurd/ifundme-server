@@ -28,4 +28,4 @@ class UserHandler(HandlerBase, ABC):
 
     def list(self, r: Request, **kwargs):
         users = self.service.list()
-        return [u.to_response for u in users]
+        return [u.to_response() for u in users]
