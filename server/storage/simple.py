@@ -8,8 +8,9 @@ from server.storage.user import UserStorage
 
 
 class SimpleStorage(UserStorage):
-    def __init__(self):
-        self.filename = os.environ.get('IFM_STORAGE_FILE', 'simpleStorage.json')
+    def __init__(self, filename=None):
+        if filename is None:
+            self.filename = os.environ.get('IFM_STORAGE_FILE', 'simpleStorage.json')
         if os.path.isfile(self.filename):
             try:
                 self.data = json.load(open(self.filename, 'r'))
