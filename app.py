@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from werkzeug.exceptions import NotFound
 import logging
 
@@ -31,10 +31,28 @@ def handle_error(e: Exception):
         return build_response(unknown_error.to_response(), unknown_error.get_code())
 
 
-@app.route('/health')
-def health():
-    factory.handlers.health.get()
-    return build_response('all is well')
+@app.route('/health', methods=['GET'])
+def get_health():
+    result = factory.handlers.health.get()
+    return build_response(result)
+
+
+@app.route('/users', methods=['GET'])
+def list_users():
+    result = factory.handlers.user.list(request)
+    return build_response(result)
+
+
+@app.route('/users', methods=['POST'])
+def create_user():
+    result = factory.handlers.user.create(request)
+    return build_response(result)
+
+
+@app.route('/users/<username>', methods=['PUT'])
+def update_user(username):
+    result = factory.handlers.user.update(request, username=username)
+    return build_response(result)
 
 
 if __name__ == '__main__':

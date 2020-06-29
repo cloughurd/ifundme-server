@@ -1,11 +1,13 @@
 import os
 
 from server.handlers.health import HealthHandler
+from server.handlers.user import UserHandler
 
 
 class HandlerFactory:
     def __init__(self):
         self.health = HealthHandler()
+        self.user = UserHandler()
 
 
 class AppFactory:
