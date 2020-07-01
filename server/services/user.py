@@ -24,7 +24,7 @@ class UserService:
 
     def list(self):
         users = self.storage.list_users()
-        return [FilteredUser(u) for u in users]
+        return sorted([FilteredUser(u) for u in users], key=lambda x: x.date_last_accessed, reverse=True)
 
 
 class FilteredUser:

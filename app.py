@@ -56,5 +56,29 @@ def update_user(username):
     return build_response(result)
 
 
+@app.route('/memberships', methods=['POST'])
+def create_membership():
+    result = factory.handlers.membership.create(request)
+    return build_response(result)
+
+
+@app.route('/memberships/search', methods=['POST'])
+def search_memberships():
+    result = factory.handlers.membership.search(request)
+    return build_response(result)
+
+
+@app.route('/memberships/<membership_id>', methods=['PUT'])
+def update_membership(membership_id):
+    result = factory.handlers.membership.update(request, membership_id=membership_id)
+    return build_response(result)
+
+
+@app.route('/groups', methods=['POST'])
+def create_group():
+    result = factory.handlers.group.create(request)
+    return build_response(result)
+
+
 if __name__ == '__main__':
     app.run(debug=True, port=8080, use_reloader=False)
