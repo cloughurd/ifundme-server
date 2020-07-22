@@ -3,9 +3,11 @@ import os
 from server.handlers.group import GroupHandler
 from server.handlers.health import HealthHandler
 from server.handlers.membership import MembershipHandler
+from server.handlers.summary import SummaryHandler
 from server.handlers.user import UserHandler
 from server.services.group import GroupService
 from server.services.membership import MembershipService
+from server.services.summary import SummaryService
 from server.services.user import UserService
 from server.storage.simple import SimpleStorage
 
@@ -23,6 +25,7 @@ class ServiceFactory:
         self.user = UserService(storages.user)
         self.membership = MembershipService(storages.membership)
         self.group = GroupService(storages.group)
+        self.summary = SummaryService()
 
 
 class HandlerFactory:
@@ -31,6 +34,7 @@ class HandlerFactory:
         self.user = UserHandler(services.user)
         self.membership = MembershipHandler(services.membership)
         self.group = GroupHandler(services.group)
+        self.summary = SummaryHandler(services.summary)
 
 
 class AppFactory:

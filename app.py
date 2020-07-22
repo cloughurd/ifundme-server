@@ -80,5 +80,15 @@ def create_group():
     return build_response(result)
 
 
+@app.route('/groups/<group_name>/budget', methods=['POST'])
+def create_budget(group_name: str):
+    pass
+
+
+@app.route('/groups/<group_name>/summary', methods=['GET'])
+def get_summary(group_name: str):
+    pass
+
+
 if __name__ == '__main__':
     app.run(debug=True, port=8080, use_reloader=False)
