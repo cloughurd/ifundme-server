@@ -87,7 +87,8 @@ def create_budget(group_name: str):
 
 @app.route('/groups/<group_name>/summary', methods=['GET'])
 def get_summary(group_name: str):
-    pass
+    result = factory.handlers.summary.get(request, group_name=group_name)
+    return build_response(result)
 
 
 if __name__ == '__main__':
