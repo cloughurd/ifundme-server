@@ -23,9 +23,7 @@ class MembershipHandler(HandlerBase, ABC):
             raise InvalidRequestException(f"search type '{search_type}' not supported")
         memberships = self.service.search(search_type, search_id)
         return {
-            'result': {
-                'memberships': [m.to_response() for m in memberships]
-            }
+            'memberships': [m.to_response() for m in memberships]
         }
 
     def create(self, r: Request, **kwargs):
@@ -38,9 +36,7 @@ class MembershipHandler(HandlerBase, ABC):
             msg = f'{e.args[0]} not provided'
             raise InvalidRequestException(msg, e)
         membership = self.service.create(username, group_name, member_type)
-        return {
-            'result': membership.to_response()
-        }
+        return membership.to_response()
 
     def update(self, r: Request, **kwargs):
         body = r.get_json()
@@ -54,6 +50,4 @@ class MembershipHandler(HandlerBase, ABC):
         if change_field not in ['type']:
             raise InvalidRequestException(f"updating '{change_field}' not supported")
         membership = self.service.update(membership_id, change_field, change_value)
-        return {
-            'result': membership.to_response()
-        }
+        return membership.to_response()

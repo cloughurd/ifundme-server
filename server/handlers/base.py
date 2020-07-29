@@ -16,3 +16,12 @@ class HandlerBase:
 
     def search(self, r: Request, **kwargs):
         raise NotImplementedError
+
+
+def respond(func):
+    def make_response(self: HandlerBase, r: Request, **kwargs):
+        result = func(self, r, **kwargs)
+        return {
+            'result': result
+        }
+    return make_response

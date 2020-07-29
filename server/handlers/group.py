@@ -19,6 +19,4 @@ class GroupHandler(HandlerBase, ABC):
             msg = f'{e.args[0]} not provided'
             raise InvalidRequestException(msg, e)
         group = self.service.create(group_name)
-        return {
-            'result': group.to_response()
-        }
+        return group.to_response()
