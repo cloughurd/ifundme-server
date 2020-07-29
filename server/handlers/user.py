@@ -18,7 +18,7 @@ class UserHandler(HandlerBase, ABC):
             raise InvalidRequestException('username not provided')
         u = self.service.create(username)
         return {
-            'user': u.to_response()
+            'result': u.to_response()
         }
 
     def update(self, r: Request, **kwargs):
@@ -27,11 +27,13 @@ class UserHandler(HandlerBase, ABC):
             raise InvalidRequestException('username not provided')
         u = self.service.update(username)
         return {
-            'user': u.to_response()
+            'result': u.to_response()
         }
 
     def list(self, r: Request, **kwargs):
         users = self.service.list()
         return {
-            'users': [u.to_response() for u in users]
+            'result': {
+                'users': [u.to_response() for u in users]
+            }
         }

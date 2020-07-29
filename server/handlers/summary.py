@@ -18,5 +18,5 @@ class SummaryHandler(HandlerBase, ABC):
             raise InvalidRequestException(msg, e)
         summary = self.service.generate_summary(group_name)
         return {
-            'summary': summary.to_response()
+            'result': summary.to_response()
         }

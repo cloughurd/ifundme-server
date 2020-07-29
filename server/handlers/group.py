@@ -20,5 +20,5 @@ class GroupHandler(HandlerBase, ABC):
             raise InvalidRequestException(msg, e)
         group = self.service.create(group_name)
         return {
-            'group': group.to_response()
+            'result': group.to_response()
         }
