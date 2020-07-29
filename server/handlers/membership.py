@@ -3,7 +3,7 @@ from abc import ABC
 from flask import Request
 
 from server.exceptions.server import InvalidRequestException
-from server.handlers.base import HandlerBase
+from server.handlers.base import HandlerBase, respond
 from server.services.membership import MembershipService
 
 
@@ -11,6 +11,7 @@ class MembershipHandler(HandlerBase, ABC):
     def __init__(self, service: MembershipService):
         self.service = service
 
+    @respond
     def search(self, r: Request, **kwargs):
         body = r.get_json()
         try:
@@ -26,6 +27,7 @@ class MembershipHandler(HandlerBase, ABC):
             'memberships': [m.to_response() for m in memberships]
         }
 
+    @respond
     def create(self, r: Request, **kwargs):
         body = r.get_json()
         try:
@@ -38,6 +40,7 @@ class MembershipHandler(HandlerBase, ABC):
         membership = self.service.create(username, group_name, member_type)
         return membership.to_response()
 
+    @respond
     def update(self, r: Request, **kwargs):
         body = r.get_json()
         try:
