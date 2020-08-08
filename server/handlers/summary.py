@@ -2,7 +2,7 @@ from abc import ABC
 from flask import Request
 
 from server.exceptions.server import InvalidRequestException
-from server.handlers.base import HandlerBase, respond
+from server.handlers.base import HandlerBase, respond, handle_key_error
 from server.services.summary import SummaryService
 
 
@@ -11,11 +11,8 @@ class SummaryHandler(HandlerBase, ABC):
         self.service = service
 
     @respond
+    @handle_key_error
     def get(self, r: Request, **kwargs):
-        try:
-            group_name = kwargs.get("group_name")
-        except KeyError as e:
-            msg = f'{e.args[0]} not provided'
-            raise InvalidRequestException(msg, e)
+        group_name = kwargs['group_name']
         summary = self.service.generate_summary(group_name)
         return summary.to_response()

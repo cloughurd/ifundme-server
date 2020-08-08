@@ -3,7 +3,7 @@ from abc import ABC
 from flask import Request
 
 from server.exceptions.server import InvalidRequestException
-from server.handlers.base import HandlerBase, respond
+from server.handlers.base import HandlerBase, respond, handle_key_error
 from server.services.group import GroupService
 
 
@@ -12,12 +12,9 @@ class GroupHandler(HandlerBase, ABC):
         self.service = service
 
     @respond
+    @handle_key_error
     def create(self, r: Request, **kwargs):
         body = r.get_json()
-        try:
-            group_name = body['groupName']
-        except KeyError as e:
-            msg = f'{e.args[0]} not provided'
-            raise InvalidRequestException(msg, e)
+        group_name = body['groupName']
         group = self.service.create(group_name)
         return group.to_response()
