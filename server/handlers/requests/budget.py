@@ -1,9 +1,10 @@
-from server.models.budget import BudgetEntry
+from server.models.budget import Category
 
 
-class BudgetRequestEntry(BudgetEntry):
+class BudgetRequestEntry:
     def __init__(self, name: str, percentage: float, builds: bool):
-        super().__init__(name, percentage)
+        self.name = name
+        self.percentage = percentage
         self.builds = builds
 
 

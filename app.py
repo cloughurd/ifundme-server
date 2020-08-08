@@ -82,7 +82,8 @@ def create_group():
 
 @app.route('/groups/<group_name>/budget', methods=['POST'])
 def create_budget(group_name: str):
-    pass
+    result = factory.handlers.budget.create(request, group_name=group_name)
+    return build_response(result)
 
 
 @app.route('/groups/<group_name>/summary', methods=['GET'])

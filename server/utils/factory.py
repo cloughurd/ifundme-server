@@ -1,10 +1,12 @@
 import os
 
+from server.handlers.budget import BudgetHandler
 from server.handlers.group import GroupHandler
 from server.handlers.health import HealthHandler
 from server.handlers.membership import MembershipHandler
 from server.handlers.summary import SummaryHandler
 from server.handlers.user import UserHandler
+from server.services.budget import BudgetService
 from server.services.group import GroupService
 from server.services.membership import MembershipService
 from server.services.summary import SummaryService
@@ -18,6 +20,7 @@ class StorageFactory:
         self.user = self.storage
         self.membership = self.storage
         self.group = self.storage
+        self.budget = self.storage
 
 
 class ServiceFactory:
@@ -26,6 +29,7 @@ class ServiceFactory:
         self.membership = MembershipService(storages.membership)
         self.group = GroupService(storages.group)
         self.summary = SummaryService()
+        self.budget = BudgetService(storages.budget)
 
 
 class HandlerFactory:
@@ -35,6 +39,7 @@ class HandlerFactory:
         self.membership = MembershipHandler(services.membership)
         self.group = GroupHandler(services.group)
         self.summary = SummaryHandler(services.summary)
+        self.budget = BudgetHandler(services.budget)
 
 
 class AppFactory:
