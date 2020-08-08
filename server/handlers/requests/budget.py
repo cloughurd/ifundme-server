@@ -1,6 +1,3 @@
-from server.models.budget import Category
-
-
 class BudgetRequestEntry:
     def __init__(self, name: str, percentage: float, builds: bool):
         self.name = name

@@ -14,7 +14,7 @@ class UserHandler(HandlerBase, ABC):
     @respond
     def create(self, r: Request, **kwargs):
         body = r.get_json()
-        username = body.get('username')
+        username = body.get()
         if username is None:
             raise InvalidRequestException('username not provided')
         u = self.service.create(username)

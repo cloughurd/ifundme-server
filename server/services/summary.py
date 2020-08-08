@@ -1,4 +1,5 @@
 from server.models.summary import FundSummary, GroupSummary
+from server.storage.budget import BudgetStorage
 
 
 class SummaryService:
