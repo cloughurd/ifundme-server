@@ -32,8 +32,3 @@ class TestCreateBudgetRequest(unittest.TestCase):
         req_dict['fakeArgument'] = 'I should not be here'
         with self.assertRaises(TypeError):
             CreateBudgetRequest(**req_dict)
-        try:
-            CreateBudgetRequest(**req_dict)
-        except TypeError as e:
-            print(str(e))
-            raise e

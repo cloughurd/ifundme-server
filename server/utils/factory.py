@@ -15,12 +15,13 @@ from server.storage.simple import SimpleStorage
 
 
 class StorageFactory:
-    def __init__(self):
-        self.storage = SimpleStorage()
+    def __init__(self, storage):
+        self.storage = storage
         self.user = self.storage
         self.membership = self.storage
         self.group = self.storage
         self.budget = self.storage
+        self.summary = self.storage
 
 
 class ServiceFactory:
@@ -28,7 +29,7 @@ class ServiceFactory:
         self.user = UserService(storages.user)
         self.membership = MembershipService(storages.membership)
         self.group = GroupService(storages.group)
-        self.summary = SummaryService()
+        self.summary = SummaryService(storages.summary)
         self.budget = BudgetService(storages.budget)
 
 
@@ -43,8 +44,8 @@ class HandlerFactory:
 
 
 class AppFactory:
-    def __init__(self):
-        self.storages = StorageFactory()
+    def __init__(self, storage):
+        self.storages = StorageFactory(storage)
         self.services = ServiceFactory(self.storages)
         self.handlers = HandlerFactory(self.services)
 

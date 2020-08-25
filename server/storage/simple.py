@@ -18,6 +18,8 @@ class SimpleStorage(UserStorage, MembershipStorage, GroupStorage):
         self.logger = logging.getLogger(__name__)
         if filename is None:
             self.filename = os.environ.get('IFM_STORAGE_FILE', 'simpleStorage.pickle')
+        else:
+            self.filename = filename
         if os.path.isfile(self.filename):
             try:
                 self.data = pickle.load(open(self.filename, 'rb'))
