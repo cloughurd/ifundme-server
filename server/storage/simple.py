@@ -4,16 +4,19 @@ from datetime import date
 import logging
 
 from server.exceptions.storage import StorageAccessException, ResourceNotFoundException, DuplicateResourceIdException
+from server.handlers.requests.budget import BudgetRequestEntry
+from server.models.budget import Fund, Category, Income
 from server.models.group import Group
 from server.models.membership import Membership
 from server.models.user import User
+from server.storage.budget import BudgetStorage
 from server.storage.group import GroupStorage
 from server.storage.membership import MembershipStorage
 from server.storage.user import UserStorage
 from server.utils.ids import IdGenerator
 
 
-class SimpleStorage(UserStorage, MembershipStorage, GroupStorage):
+class SimpleStorage(UserStorage, MembershipStorage, GroupStorage, BudgetStorage):
     def __init__(self, filename=None):
         self.logger = logging.getLogger(__name__)
         if filename is None:
@@ -23,8 +26,9 @@ class SimpleStorage(UserStorage, MembershipStorage, GroupStorage):
         if os.path.isfile(self.filename):
             try:
                 self.data = pickle.load(open(self.filename, 'rb'))
-            except Exception as e:
-                raise StorageAccessException('simple storage', e)
+            except Exception:
+                # raise StorageAccessException('simple storage', e)
+                self.data = Data()
         else:
             self.data = Data()
 
@@ -85,6 +89,30 @@ class SimpleStorage(UserStorage, MembershipStorage, GroupStorage):
                     results.append(m)
         return results
 
+    def get_income(self, group_name: str) -> Income:
+        if group_name in self.data.incomes:
+            return self.data.incomes[group_name]
+        raise ResourceNotFoundException(f'income for {group_name}', 'income')
+
+    def list_budget_categories(self, group_name: str) -> list:
+        group_categories = [x for x in self.data.categories if x.group_name == group_name]
+        return group_categories
+
+    def create_income(self, group_name: str, projected_income: float) -> Income:
+        income = Income(group_name, projected_income)
+        self.data.incomes[group_name] = income
+        return income
+
+    def create_budget_category(self, group_name: str, entry: BudgetRequestEntry) -> Category:
+        category = Category(entry.name, group_name, entry.percentage)
+        self.data.categories.append(category)
+        return category
+
+    def create_fund(self, category_id: str, balance=0) -> Fund:
+        fund = Fund(category_id, balance, date.today(), date.today())
+        self.data.funds[category_id] = fund
+        return fund
+
     def save(self):
         try:
             pickle.dump(self.data, open(self.filename, 'wb'))
@@ -94,13 +122,22 @@ class SimpleStorage(UserStorage, MembershipStorage, GroupStorage):
 
 
 class Data:
-    def __init__(self, user=None, membership=None, group=None):
+    def __init__(self, user=None, membership=None, group=None, categories=None, funds=None, incomes=None):
         if group is None:
             group = {}
         if membership is None:
             membership = []
         if user is None:
             user = {}
+        if categories is None:
+            categories = []
+        if funds is None:
+            funds = {}
+        if incomes is None:
+            incomes = {}
         self.user = user
         self.membership = membership
         self.group = group
+        self.categories = categories
+        self.funds = funds
+        self.incomes = incomes

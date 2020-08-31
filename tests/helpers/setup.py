@@ -33,3 +33,12 @@ def create_membership(factory: AppFactory, username=None, group_name=None, membe
     body = _add_entry_or_default(body, RequestBodyKeys.group_name, group_name, 'test group')
     body = _add_entry_or_default(body, RequestBodyKeys.member_type, member_type, Membership.normal_type)
     return factory.handlers.membership.create(DummyRequest().with_body(body))
+
+
+def create_budget(factory: AppFactory, group_name=None, projected_income=None, entries=None, body=None):
+    if body is None:
+        body = {}
+    default_entries = [{ 'name': 'general', 'percentage': 100.0, 'builds': True}]
+    body = _add_entry_or_default(body, RequestBodyKeys.entries, entries, default_entries)
+    body = _add_entry_or_default(body, RequestBodyKeys.projected_income, projected_income, 1000.0)
+    return factory.handlers.budget.create(DummyRequest().with_body(body), group_name=group_name)

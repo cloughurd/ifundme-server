@@ -9,6 +9,9 @@ class BudgetStorage:
     def list_budget_categories(self, group_name: str) -> list:
         raise NotImplementedError
 
+    def list_funds(self, group_name: str) -> list:
+        raise NotImplementedError
+
     def create_income(self, group_name: str, projected_income: float) -> Income:
         raise NotImplementedError
 
