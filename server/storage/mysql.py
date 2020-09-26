@@ -33,7 +33,7 @@ class MySqlStorage:
 
     def _create_tables(self):
         create_groups_statement = """
-            CREATE TABLE IF NOT EXISTS groups (
+            CREATE TABLE IF NOT EXISTS `groups` (
                 group_id varchar(48) NOT NULL,
                 group_name varchar(48) NOT NULL,
                 group_pin varchar(8) NOT NULL,
@@ -42,7 +42,7 @@ class MySqlStorage:
             );  
         """
         create_users_statement = """
-            CREATE TABLE IF NOT EXISTS users (
+            CREATE TABLE IF NOT EXISTS `users` (
                 user_id varchar(48) NOT NULL,
                 username varchar(48) NOT NULL,
                 password_hash varchar(256) NOT NULL,
@@ -52,7 +52,7 @@ class MySqlStorage:
             );
         """
         create_memberships_statement = """
-            CREATE TABLE IF NOT EXISTS memberships (
+            CREATE TABLE IF NOT EXISTS `memberships` (
                 membership_id varchar(48) NOT NULL,
                 user_id varchar(48) NOT NULL,
                 group_id varchar(48) NOT NULL,
@@ -60,52 +60,59 @@ class MySqlStorage:
                 date_created date NOT NULL,
                 PRIMARY KEY (membership_id),
                 FOREIGN KEY (user_id)
-                    REFERENCES users(user_id)
+                    REFERENCES `users`(user_id),
                 FOREIGN KEY (group_id)
-                    REFERENCES groups(group_id)
+                    REFERENCES `groups`(group_id)
             );
         """
         create_categories_statement = """
-            CREATE TABLE IF NOT EXISTS categories (
+            CREATE TABLE IF NOT EXISTS `categories` (
                 category_id varchar(48) NOT NULL,
                 category_name varchar(48) NOT NULL,
-                group_name varchar(48) NOT NULL,
+                group_id varchar(48) NOT NULL,
                 percentage float NOT NULL,
                 date_created date NOT NULL,
                 date_updated date NOT NULL,
-                PRIMARY KEY (category_id)
+                PRIMARY KEY (category_id),
                 FOREIGN KEY (group_id)
-                    REFERENCES groups(group_id)
+                    REFERENCES `groups`(group_id)
             );
         """
         create_funds_statement = """
-            CREATE TABLE IF NOT EXISTS funds (
+            CREATE TABLE IF NOT EXISTS `funds` (
                 fund_id varchar(48) NOT NULL,
                 category_id varchar(48) NOT NULL,
                 balance float NOT NULL,
                 date_created date NOT NULL,
                 date_updated date NOT NULL,
-                PRIMARY KEY (fund_id)
+                PRIMARY KEY (fund_id),
                 FOREIGN KEY (category_id)
-                    REFERENCES categories(category_id)
+                    REFERENCES `categories`(category_id)
             );
         """
         create_incomes_statement = """
-            CREATE TABLE IF NOT EXISTS incomes (
+            CREATE TABLE IF NOT EXISTS `incomes` (
                 income_id varchar(48) NOT NULL,
                 group_id varchar(48) NOT NULL,
                 amount float NOT NULL,
                 date_created date NOT NULL,
                 date_updated date NOT NULL,
-                PRIMARY KEY (income_id)
+                PRIMARY KEY (income_id),
                 FOREIGN KEY (group_id)
-                    REFERENCES groups(group_id)
+                    REFERENCES `groups`(group_id)
             );
         """
         c = self.db.cursor()
+        print('Creating groups')
         c.execute(create_groups_statement)
+        print('Creating users')
         c.execute(create_users_statement)
+        print('Creating memberships')
         c.execute(create_memberships_statement)
+        print('Creating categories')
         c.execute(create_categories_statement)
+        print('Creating funds')
         c.execute(create_funds_statement)
+        print('Creating incomes')
         c.execute(create_incomes_statement)
+        print('Tables created')
