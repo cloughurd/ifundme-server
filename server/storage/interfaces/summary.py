@@ -2,7 +2,7 @@ from typing import List
 
 from server.models.budget import Income, Fund, Category
 from server.models.transaction import Transaction
-from server.storage.budget import BudgetStorage
+from server.storage.interfaces.budget import BudgetStorage
 
 
 class SummaryStorage:

@@ -3,7 +3,7 @@ from datetime import date
 from server.exceptions.server import InvalidRequestException
 from server.exceptions.storage import DuplicateResourceIdException
 from server.models.user import User
-from server.storage.user import UserStorage
+from server.storage.interfaces.user import UserStorage
 
 
 class UserService:
@@ -29,12 +29,14 @@ class UserService:
 
 class FilteredUser:
     def __init__(self, full_user: User):
+        self.user_id = full_user.user_id
         self.username = full_user.username
         self.date_created: date = full_user.date_created
         self.date_last_accessed: date = full_user.date_last_accessed
 
     def to_response(self):
         return {
+            'userId': self.user_id,
             'username': self.username,
             'dateCreated': self.date_created.isoformat(),
             'dateLastAccessed': self.date_last_accessed.isoformat()

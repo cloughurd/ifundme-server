@@ -9,10 +9,10 @@ from server.models.budget import Fund, Category, Income
 from server.models.group import Group
 from server.models.membership import Membership
 from server.models.user import User
-from server.storage.budget import BudgetStorage
-from server.storage.group import GroupStorage
-from server.storage.membership import MembershipStorage
-from server.storage.user import UserStorage
+from server.storage.interfaces.budget import BudgetStorage
+from server.storage.interfaces.group import GroupStorage
+from server.storage.interfaces.membership import MembershipStorage
+from server.storage.interfaces.user import UserStorage
 from server.utils.ids import IdGenerator
 
 

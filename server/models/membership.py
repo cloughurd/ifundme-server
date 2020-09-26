@@ -7,7 +7,8 @@ class Membership:
     leader_type = 'leader'
     normal_type = 'member'
 
-    def __init__(self, username, group_name, member_type, date_created=None, membership_id=None):
+    def __init__(self, username, group_name, member_type,
+                 date_created=None, membership_id=None):
         self.username = username
         self.group_name = group_name
         self.member_type = member_type

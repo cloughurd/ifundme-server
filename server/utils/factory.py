@@ -11,7 +11,6 @@ from server.services.group import GroupService
 from server.services.membership import MembershipService
 from server.services.summary import SummaryService
 from server.services.user import UserService
-from server.storage.simple import SimpleStorage
 
 
 class StorageFactory:

@@ -3,7 +3,7 @@ from datetime import date
 from server.exceptions.server import InvalidRequestException
 from server.exceptions.storage import DuplicateResourceIdException
 from server.models.group import Group
-from server.storage.group import GroupStorage
+from server.storage.interfaces.group import GroupStorage
 
 
 class GroupService:
@@ -21,11 +21,13 @@ class GroupService:
 
 class FilteredGroup:
     def __init__(self, full_group: Group):
+        self.group_id = full_group.group_id
         self.group_name = full_group.group_name
         self.date_created: date = full_group.date_created
 
     def to_response(self):
         return {
+            'groupId': self.group_id,
             'groupName': self.group_name,
             'dateCreated': self.date_created.isoformat()
         }

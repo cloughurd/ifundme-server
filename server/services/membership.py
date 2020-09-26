@@ -1,4 +1,4 @@
-from server.storage.membership import MembershipStorage
+from server.storage.interfaces.membership import MembershipStorage
 
 
 class MembershipService:

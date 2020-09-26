@@ -34,3 +34,12 @@ class ResourceNotFoundException(ServerException):
 
     def get_code(self):
         return 404
+
+
+class ConnectionException(ServerException):
+    def __init__(self, host='unknown', inner_error=None):
+        super().__init__(inner_error)
+        self.host = host
+
+    def get_message(self):
+        return f'Unable to connect to {self.host}'

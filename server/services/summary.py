@@ -1,4 +1,4 @@
-from server.storage.summary import SummaryStorage
+from server.storage.interfaces.summary import SummaryStorage
 
 
 class FundSummary:
