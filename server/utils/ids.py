@@ -7,16 +7,6 @@ class IdGenerator:
     category_prefix = 'CAT'
     expense_prefix = 'EXP'
     income_prefix = 'INC'
-    group_prefix = 'GRP'
-    user_prefix = 'USR'
-
-    @staticmethod
-    def generate_user_id():
-        return IdGenerator._generate_id(IdGenerator.user_prefix)
-
-    @staticmethod
-    def generate_group_id():
-        return IdGenerator._generate_id(IdGenerator.group_prefix)
 
     @staticmethod
     def generate_membership_id():

@@ -43,3 +43,12 @@ class ConnectionException(ServerException):
 
     def get_message(self):
         return f'Unable to connect to {self.host}'
+
+
+class ResourceAccessException(ServerException):
+    def __init__(self, resource_id, inner_error=None):
+        super().__init__(inner_error)
+        self.resource_id = resource_id
+
+    def get_message(self):
+        return 'Problem accessing resource {} in storage'.format(self.resource_id)
