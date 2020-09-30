@@ -57,19 +57,63 @@ class MySqlStorage(GroupStorage, UserStorage, MembershipStorage, BudgetStorage):
         return g
 
     def create_user(self, username: str, password_hash: str) -> User:
-        pass
+        u = User(username, password_hash, date.today(), date.today())
+        sql = '''
+            INSERT INTO `users`
+                (username, password_hash, date_created, date_last_accessed)
+                VALUE (%s, %s, %s, %s)
+        '''
+        val = (u.username, u.password_hash, u.date_created, u.date_last_accessed)
+        try:
+            self._execute_insert_query(sql,val)
+        except Exception as e:
+            raise ResourceAccessException(u.username, e)
+        return u
 
     def update_user(self, username: str) -> User:
+        sql = '''
+            UPDATE `users`
+                SET date_last_accessed = %s
+                    WHERE username = %s
+        '''
+        val = (date.today(),username)
+        try:
+            self._execute_update_statement(sql, val)
+        except Exception as e:
+            raise ResourceAccessException(username, e)
         pass
 
     def list_users(self) -> list:
-        pass
+        #Select all users and return a list of the usernames
+        sql = '''
+            SELECT username
+                FROM `users`
+        '''
+        try:
+            usernames = self._execute_select_query(sql,None)
+        except Exception as e:
+            raise ResourceAccessException("All Users",e)
+        return [u[0] for u in usernames]
 
     def search_memberships(self, search_type: str, search_id: str) -> list:
+        #Search type = group or user
+        #Search is = group_name or username
+        #Return a list of memberships
         pass
 
     def create_membership(self, username: str, group_name: str, member_type: str) -> Membership:
-        pass
+        m = Membership(username,group_name,member_type,date.today())
+        sql = '''
+            INSERT INTO `memberships`
+                (username,group_name,member_type,date_created,membership_id)
+                VALUE (%s, %s, %s, %s, %s)
+        '''
+        val = (m.username,m.group_name,m.member_type,m.date_created,m.membership_id)
+        try:
+            self._execute_insert_query(sql,val)
+        except Exception as e:
+            raise ResourceAccessException(m.username, e)
+        return m
 
     def update_membership(self, membership_id: str, change_field: str, change_value: str) -> Membership:
         pass
