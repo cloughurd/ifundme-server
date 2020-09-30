@@ -1,0 +1,8 @@
+{
+  "transactionDate": "2020-01-01",
+  "amount": 1234.56,
+  "categoryId": "CAT_1234",
+  "description": "bought all the things",
+  "account": "credit card",
+  "transactionType": "expense"
+}

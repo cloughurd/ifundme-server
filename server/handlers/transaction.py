@@ -16,13 +16,9 @@ class TransactionHandler(HandlerBase, ABC):
 
     def create(self, r: Request, **kwargs):
         body = r.get_json()
-        try:
-            transaction_request = CreateTransactionRequest(**body)
-        except ValueError as e:
-            raise InvalidRequestException('invalid date format', e)
-        except TypeError as e:
-            raise InvalidRequestException('invalid create transaction request body', e)
+        transaction_request = CreateTransactionRequest(**body)
         if transaction_request.transaction_date > date.today():
+            # TODO: is this desirable?
             raise InvalidRequestException('cannot create a request for a future date')
         # TODO: build and call transaction service
 

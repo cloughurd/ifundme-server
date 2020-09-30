@@ -92,5 +92,11 @@ def get_summary(group_name: str):
     return build_response(result)
 
 
+@app.route('/groups/<group_name>/transactions', methods=['POST'])
+def create_transaction(group_name: str):
+    result = factory.handlers.transaction.create(request, group_name=group_name)
+    return build_response(result)
+
+
 if __name__ == '__main__':
     app.run(debug=True, port=8080, use_reloader=False)

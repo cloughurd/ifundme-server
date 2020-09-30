@@ -73,7 +73,7 @@ class SimpleStorage(UserStorage, MembershipStorage, GroupStorage, BudgetStorage)
         for m in self.data.membership:
             if m.membership_id == membership_id:
                 if change_field == 'type':
-                    m.member_type = change_value
+                    m.MEMBER_TYPE = change_value
                     self.save()
                     return m
         raise ResourceNotFoundException(membership_id, 'membership')
@@ -82,10 +82,10 @@ class SimpleStorage(UserStorage, MembershipStorage, GroupStorage, BudgetStorage)
         results = []
         for m in self.data.membership:
             if search_type == 'username':
-                if m.username == search_id:
+                if m.USERNAME == search_id:
                     results.append(m)
             if search_type == 'group':
-                if m.group_name == search_id:
+                if m.GROUP_NAME == search_id:
                     results.append(m)
         return results
 
@@ -95,7 +95,7 @@ class SimpleStorage(UserStorage, MembershipStorage, GroupStorage, BudgetStorage)
         raise ResourceNotFoundException(f'income for {group_name}', 'income')
 
     def list_budget_categories(self, group_name: str) -> list:
-        group_categories = [x for x in self.data.categories if x.group_name == group_name]
+        group_categories = [x for x in self.data.categories if x.GROUP_NAME == group_name]
         return group_categories
 
     def create_income(self, group_name: str, projected_income: float) -> Income:

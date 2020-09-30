@@ -20,7 +20,7 @@ class BudgetHandler(HandlerBase, ABC):
             budget_request = CreateBudgetRequest(**body)
         except TypeError as e:
             raise InvalidRequestException('invalid create budget request body', e)
-        total_percentage = sum([entry.percentage for entry in budget_request.entries])
+        total_percentage = sum([entry.percentage for entry in budget_request.categories])
         if total_percentage < 99 or total_percentage > 101:
             raise InvalidRequestException('budget entry percentages do not sum to 100%')
         budget_response = self.service.create(group_name, budget_request)

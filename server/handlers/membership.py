@@ -4,6 +4,7 @@ from flask import Request
 
 from server.exceptions.server import InvalidRequestException
 from server.handlers.base import HandlerBase, respond, handle_key_error
+from server.handlers.requests.membership import CreateMembershipRequest
 from server.services.membership import MembershipService
 
 
@@ -28,10 +29,8 @@ class MembershipHandler(HandlerBase, ABC):
     @handle_key_error
     def create(self, r: Request, **kwargs):
         body = r.get_json()
-        username = body['username']
-        group_name = body['groupName']
-        member_type = body['memberType']
-        membership = self.service.create(username, group_name, member_type)
+        create_membership_request = CreateMembershipRequest(**body)
+        membership = self.service.create(create_membership_request)
         return membership.to_response()
 
     @respond

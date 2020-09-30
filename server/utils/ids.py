@@ -7,6 +7,7 @@ class IdGenerator:
     category_prefix = 'CAT'
     expense_prefix = 'EXP'
     income_prefix = 'INC'
+    transaction_prefix = 'TRN'
 
     @staticmethod
     def generate_membership_id():
@@ -27,6 +28,10 @@ class IdGenerator:
     @staticmethod
     def generate_income_id():
         return IdGenerator._generate_id(IdGenerator.income_prefix)
+
+    @staticmethod
+    def generate_transaction_id():
+        return IdGenerator._generate_id(IdGenerator.transaction_prefix)
 
     '''
     Private method that forms IDs with specified prefix, one _,

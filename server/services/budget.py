@@ -10,7 +10,7 @@ class BudgetService:
         fund_count = 0
         category_count = 0
         self.storage.create_income(group_name, budget_request.projected_income)
-        for entry in budget_request.entries:
+        for entry in budget_request.categories:
             category = self.storage.create_budget_category(group_name, entry)
             category_count += 1
             if entry.builds:

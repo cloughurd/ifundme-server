@@ -1,0 +1,25 @@
+{
+  "projectedIncome": 1234.56,
+  "categories": [
+    {
+      "categoryName": "categoryOne",
+      "percentage": 22.5,
+      "builds": false
+    },
+    {
+      "categoryName": "categoryTwo",
+      "percentage": 27.5,
+      "builds": false
+    },
+    {
+      "categoryName": "fundOne",
+      "percentage": 37.0,
+      "builds": true
+    },
+    {
+      "categoryName": "fundTwo",
+      "percentage": 13.0,
+      "builds": true
+    }
+  ]
+}
